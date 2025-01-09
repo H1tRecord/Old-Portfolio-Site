@@ -1,0 +1,69 @@
+{
+  "about": {
+    "name": "HitRecord",
+    "location": "Philippines",
+    "description": "I love coding and creating innovative projects. I'm always eager to learn new technologies and improve my skills.",
+    "socials": {
+      "twitter": "https://twitter.com/HitRedcord",
+      "discord": "https://discord.com",
+      "email": "mailto:kjainfotech@gmail",
+      "github": "https://github.com/H1tRecord"
+    }
+  },
+  "skills": {
+    "categories": [
+      {
+        "name": "Development",
+        "items": [
+          { "name": "Python", "level": "Intermediate", "icon": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" },
+          { "name": "HTML", "level": "Intermediate", "icon": "https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" },
+          { "name": "PHP", "level": "Intermediate", "icon": "https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg" },
+          { "name": "JavaScript", "level": "Beginner", "icon": "https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg" },
+          { "name": "Tailwind CSS", "level": "Intermediate", "icon": "https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" },
+          { "name": "MySQL", "level": "Intermediate", "icon": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Database-mysql.svg" },
+          { "name": "React.js", "level": "Beginner", "icon": "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" }
+        ]
+      },
+      {
+        "name": "Tools",
+        "items": [
+          { "name": "Git", "level": "Intermediate", "icon": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Git-logo.svg" },
+          { "name": "VS Code", "level": "Intermediate", "icon": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg" },
+          { "name": "Figma", "level": "Intermediate", "icon": "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg" }
+        ]
+      },
+      {
+        "name": "Other",
+        "items": [
+          { "name": "Ren'Py", "level": "Beginner", "icon": "https://icon.icepanel.io/Technology/svg/Ren%27Py.svg" }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "copyright": "2024 HitRecord. All rights reserved.",
+    "socials": [
+      {
+        "name": "Twitter",
+        "icon": "fab fa-twitter",
+        "url": "https://twitter.com/HitRedcord"
+      },
+      {
+        "name": "GitHub",
+        "icon": "fab fa-github",
+        "url": "https://github.com/H1tRecord"
+      },
+      {
+        "name": "Discord",
+        "icon": "fab fa-discord",
+        "url": "https://discord.com"
+      }
+    ],
+    "links": [
+      {
+        "text": "Source Code",
+        "url": "https://github.com/H1tRecord/H1tRecord.github.io"
+      }
+    ]
+  }
+}
