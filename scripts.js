@@ -1,9 +1,13 @@
+// Mobile menu toggle handler
 document.getElementById('menu-btn').addEventListener('click', function () {
     const menu = document.getElementById('menu');
     menu.classList.toggle('hidden');
 });
 
+// Main initialization when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize intersection observer for fade-in animations
+    // This creates smooth appearance animations when elements come into view
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -12,32 +16,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, { threshold: 0.1 });
 
+    // Apply fade-in animation to main sections
     document.querySelectorAll('.bg-gray-800, #projects, #about, #skills')
         .forEach(el => {
             el.classList.add('fade-in');
             observer.observe(el);
         });
 
+    // Function to fetch and display GitHub repositories
     async function fetchGitHubRepos() {
         const projectsGrid = document.getElementById('projects-grid');
+        // Show loading indicator
         projectsGrid.innerHTML = '<div class="loading mx-auto"></div>';
 
         try {
+            // Fetch repos from GitHub API
             const username = 'H1tRecord';
             const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&direction=desc`);
             
+            // Handle API errors
             if (!response.ok) {
                 throw new Error('Failed to fetch repositories');
             }
 
+            // Process repository data
             const repos = await response.json();
+            // Filter out forks and limit to 6 repos
             const filteredRepos = repos.filter(repo => !repo.fork).slice(0, 6);
 
+            // Handle case when no repos are found
             if (filteredRepos.length === 0) {
                 projectsGrid.innerHTML = '<p class="text-white">No repositories found.</p>';
                 return;
             }
 
+            // Generate HTML for each repository
             const reposHTML = filteredRepos.map(repo => `
                 <div class="transform transition-all duration-300 hover:-translate-y-1 bg-gray-800/50 backdrop-blur-sm border border-gray-700 p-6 rounded-xl shadow-lg hover:shadow-xl">
                     <div class="flex justify-between items-start">
@@ -76,26 +89,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `).join('');
 
+            // Update the projects grid with repository cards
             projectsGrid.innerHTML = reposHTML;
         } catch (error) {
+            // Handle errors and display user-friendly message
             console.error('Error fetching repositories:', error);
             projectsGrid.innerHTML = '<p class="text-white">Failed to load repositories. Please try again later.</p>';
         }
     }
 
+    // Fetch GitHub repositories on page load
     fetchGitHubRepos();
 
+    // Function to fetch and populate content from content.json
     async function fetchContent() {
         try {
+            // Fetch content data
             const response = await fetch('content.json');
             if (!response.ok) throw new Error('Failed to fetch content');
             const content = await response.json();
 
-            // Populate About Me section
+            // Populate About section with personal info
             document.getElementById('about-name').innerHTML = `Hi! I'm <span class="text-purple-400">${content.about.name}</span>, an aspiring developer from the <span class="flag-colors">${content.about.location}</span>`;
             document.getElementById('about-description').innerText = content.about.description;
 
-            // Populate social links
+            // Update social links with dynamic content
             const socialLinks = document.getElementById('social-links');
             socialLinks.innerHTML = `
                 <a href="${content.about.socials.twitter}" target="_blank" class="flex items-center text-gray-400 hover:text-white mb-2">
@@ -112,12 +130,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 </a>
             `;
 
-            // Update skills section
+            // Handle both old and new skills format
             const skillsContainer = document.getElementById('skills-container');
             
-            // Check if skills exist in old format
             if (Array.isArray(content.skills)) {
-                // Handle old format
+                // Handle legacy skills format
                 skillsContainer.innerHTML = `
                     <div class="skill-category">
                         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
@@ -132,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `;
             } else if (content.skills.categories) {
-                // Handle new categorized format
+                // Handle new categorized skills format
                 skillsContainer.innerHTML = content.skills.categories.map(category => `
                     <div class="skill-category mb-8">
                         <h3 class="text-xl font-semibold mb-4 text-purple-400">${category.name}</h3>
@@ -149,9 +166,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 `).join('');
             }
 
-            // Populate footer
+            // Update footer with dynamic content
             if (content.footer) {
-                // Render social icons
+                // Populate social icons, copyright, and links
                 document.getElementById('footer-socials').innerHTML = content.footer.socials
                     .map(social => `
                         <a href="${social.url}" target="_blank" class="text-white mx-2 transition-colors duration-300 hover:text-purple-400">
@@ -166,23 +183,29 @@ document.addEventListener('DOMContentLoaded', () => {
                     `).join('');
             }
         } catch (error) {
+            // Handle content loading errors
             console.error('Error fetching content:', error);
             document.getElementById('skills-container').innerHTML = '<p class="text-white">Failed to load skills. Please try again later.</p>';
         }
     }
 
+    // Fetch content on page load
     fetchContent();
 });
 
+// Function to update time display
 function updateTime() {
+    // Format time with Philippines timezone
     const options = { timeZone: 'Asia/Manila', hour12: true, hour: 'numeric', minute: 'numeric', second: 'numeric', day: 'numeric', month: 'long', year: 'numeric' };
     const now = new Date().toLocaleString('en-US', options);
     document.getElementById('time-date').innerText = now;
 }
 
+// Initialize and update time display every second
 updateTime();
 setInterval(updateTime, 1000);
 
+// Smooth scroll handler for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -196,12 +219,16 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+// Function to handle section scrolling and mobile menu
 function scrollToSection(id) {
+    // Scroll to target section with offset for navigation bar
     const element = document.getElementById(id);
     element.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
     });
+    
+    // Close mobile menu if open
     const menu = document.getElementById('menu');
     if (!menu.classList.contains('hidden')) {
         menu.classList.add('hidden');
