@@ -32,11 +32,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const username = 'H1tRecord';
-            const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&direction=desc`);
+            const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&direction=desc`, {
+                headers: {
+                    'Accept': 'application/vnd.github.v3+json',
+                    // Add a User-Agent header to avoid API limitations
+                    'User-Agent': 'H1tRecord-Portfolio'
+                },
+                // Add cache control
+                cache: 'no-cache'
+            });
             
-            if (!response.ok) throw new Error('Failed to fetch repositories');
+            if (!response.ok) {
+                throw new Error(`GitHub API Error: ${response.status}`);
+            }
 
             const repos = await response.json();
+            // Add error logging
+            if (!Array.isArray(repos)) {
+                console.error('Invalid response format:', repos);
+                throw new Error('Invalid response format from GitHub API');
+            }
             const filteredRepos = repos.filter(repo => !repo.fork);
             // Filter repos for featured section - must have stars or forks
             const featuredRepos = filteredRepos.filter(repo => repo.stargazers_count > 0 || repo.forks_count > 0);
@@ -246,8 +261,18 @@ document.addEventListener('DOMContentLoaded', () => {
             };
         } catch (error) {
             console.error('Error fetching repositories:', error);
-            projectsGrid.innerHTML = '<p class="text-white">Failed to load repositories. Please try again later.</p>';
-            featuredProject.innerHTML = '';
+            const errorMessage = error.message.includes('API') ? 
+                'GitHub API rate limit exceeded. Please try again later.' : 
+                'Failed to load repositories. Please try again later.';
+            
+            projectsGrid.innerHTML = `<p class="text-white text-center">${errorMessage}</p>`;
+            featuredProject.innerHTML = `<p class="text-white text-center">Unable to load featured projects.</p>`;
+            
+            // Clear pagination if there's an error
+            const paginationContainer = document.getElementById('pagination-container');
+            if (paginationContainer) {
+                paginationContainer.innerHTML = '';
+            }
         }
     }
 
