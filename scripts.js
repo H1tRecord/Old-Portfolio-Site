@@ -373,10 +373,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Function to update time display
 function updateTime() {
-    // Format time with Philippines timezone
-    const options = { timeZone: 'Asia/Manila', hour12: true, hour: 'numeric', minute: 'numeric', second: 'numeric', day: 'numeric', month: 'long', year: 'numeric' };
-    const now = new Date().toLocaleString('en-US', options);
-    document.getElementById('time-date').innerText = now;
+    const timeEl = document.getElementById('time-date');
+    if (!timeEl) return;
+
+    const now = new Date();
+    const timeOptions = { 
+        timeZone: 'Asia/Manila', 
+        hour12: true, 
+        hour: 'numeric', 
+        minute: 'numeric', 
+        second: 'numeric'
+    };
+    const dateOptions = {
+        timeZone: 'Asia/Manila',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    };
+
+    const timeText = now.toLocaleString('en-US', timeOptions);
+    const dateText = now.toLocaleString('en-US', dateOptions);
+    
+    const timeTextEl = timeEl.querySelector('.time-text');
+    const dateTextEl = timeEl.querySelector('.date-text');
+    
+    if (timeTextEl) timeTextEl.innerText = timeText;
+    if (dateTextEl) dateTextEl.innerText = dateText;
 }
 
 // Initialize and update time display every second

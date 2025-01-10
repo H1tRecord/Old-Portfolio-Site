@@ -138,3 +138,27 @@ button[aria-current="page"] {
 button:disabled {
     pointer-events: none;
 }
+
+#time-date {
+    min-width: 200px;
+    transform: translateY(0);
+    transition: all 0.3s ease;
+}
+
+#time-date:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px -6px rgba(147, 51, 234, 0.3);
+    border-color: rgba(147, 51, 234, 0.5);
+}
+
+.time-text {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.5px;
+}
+
+.date-text {
+    font-variant-numeric: tabular-nums;
+    border-top: 1px solid rgba(107, 114, 128, 0.2);
+    padding-top: 0.5rem;
+    margin-top: 0.5rem;
+}
