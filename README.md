@@ -29,7 +29,7 @@ The site content is managed through `content.json`, allowing easy updates to:
 ## Local Development
 1. Clone the repository:
    ```bash
-   git clone https://github.com/H1tRecord/H1tRecord.github.io.git
+   git clone https://github.com/H1tRecord/Old-Portfolio-Site
    ```
 2. Navigate to the project:
    ```bash
